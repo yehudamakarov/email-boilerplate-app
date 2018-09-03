@@ -1,7 +1,7 @@
 {
-    "name": "server",
+    "name": "email-app",
     "version": "1.0.0",
-    "description": "sample boiler plate project sample",
+    "description": "sample boiler plate project to send emails",
     "main": "index.js",
     "engines": {
         "node": "8.11.4",
