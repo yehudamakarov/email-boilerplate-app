@@ -19,13 +19,13 @@ app.use(passport.session());
 
 mongoose.connect(keys.mongoDBConnectionURI);
 
-// Set up '/auth/google' and 'auth/google/callback'
-require('./routes/authRoutes')(app);
-
 // Make the User class
 require('./models/User');
 
 // Make the Google Strategy which is how we contact Google and where we make a User
 require('./services/passport');
+
+// Set up '/auth/google' and 'auth/google/callback'
+require('./routes/authRoutes')(app);
 
 app.listen(PORT);

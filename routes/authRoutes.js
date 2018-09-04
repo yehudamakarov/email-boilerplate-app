@@ -1,4 +1,7 @@
 const passport = require('passport');
+const mongoose = require('mongoose');
+
+const User = mongoose.model('users');
 
 module.exports = app => {
     app.get(
@@ -15,6 +18,10 @@ module.exports = app => {
 
     app.get('/api/current_user', (req, res) => {
         res.send(req.user);
+    });
+
+    app.get('/api/users', (req, res) => {
+        User.find({}, 'id').then(resp => res.send(resp));
     });
 
     app.get('/api/logout', (req, res) => {
