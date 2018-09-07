@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from './store/actions';
+import { fetchUser } from './store/actions';
 
 class App extends Component {
     componentDidMount() {
@@ -19,5 +19,5 @@ class App extends Component {
 
 export default connect(
     null,
-    actions
+    { fetchUser }
 )(App);
