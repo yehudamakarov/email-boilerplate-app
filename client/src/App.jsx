@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from './store/actions';
 
-const App = () => (
-    <div>
-        <a href="/auth/google">Sign In with Google</a>
-    </div>
-);
+class App extends Component {
+    componentDidMount() {
+        const { fetchUser } = this.props;
+        fetchUser();
+    }
 
-export default App;
+    render() {
+        return (
+            <div>
+                <a href="/auth/google">Sign In with Google</a>
+            </div>
+        );
+    }
+}
+
+export default connect(
+    null,
+    actions
+)(App);
