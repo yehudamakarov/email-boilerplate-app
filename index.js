@@ -1,13 +1,14 @@
 const express = require('express');
+const cookieSession = require('cookie-session');
 const mongoose = require('mongoose');
 const passport = require('passport');
-const cookieSession = require('cookie-session');
+
 const keys = require('./config/keys');
 
 const PORT = process.env.PORT || 5000;
-const app = express();
 
 // Make passport serialize and deserialize to and from the session
+const app = express();
 app.use(
     cookieSession({
         maxAge: 6 * 60 * 60 * 1000,
@@ -17,9 +18,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Connect to mongoDB
 mongoose.connect(keys.mongoDBConnectionURI);
 
-// Make the User class
+// Register the User model
 require('./models/User');
 
 // Make the Google Strategy which is how we contact Google and where we make a User
@@ -27,5 +29,8 @@ require('./services/passport');
 
 // Set up '/auth/google' and 'auth/google/callback'
 require('./routes/authRoutes')(app);
+
+// Set up test routes
+require('./routes/testRoutes')(app);
 
 app.listen(PORT);

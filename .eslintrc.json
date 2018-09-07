@@ -1,18 +1,22 @@
 {
     "extends": [
         "airbnb",
-        "prettier"
+        "prettier",
+        "prettier/react"
     ],
+    "parser": "babel-eslint",
     "rules": {
         "prettier/prettier": [
-            1,
+            "error",
             {
                 "trailingComma": "es5",
                 "singleQuote": true,
-                "printWidth": 80,
+                "printWidth": 120,
                 "tabWidth": 4
             }
-        ]
+        ],
+        "react/prop-types": 0,
+        "no-shadow": 0
     },
     "plugins": [
         "prettier"
