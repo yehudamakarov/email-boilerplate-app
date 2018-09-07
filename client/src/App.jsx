@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { fetchUser } from './store/actions';
+import Navbar from './components/Navbar';
 
 class App extends Component {
     componentDidMount() {
@@ -10,9 +13,15 @@ class App extends Component {
 
     render() {
         return (
-            <div>
-                <a href="/auth/google">Sign In with Google</a>
-            </div>
+            <Fragment>
+                <CssBaseline />
+                <Navbar />
+                <Router>
+                    <Fragment>
+                        <Route />
+                    </Fragment>
+                </Router>
+            </Fragment>
         );
     }
 }
