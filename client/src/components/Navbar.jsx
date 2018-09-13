@@ -1,4 +1,7 @@
 import React from 'react';
+
+import { connect } from 'react-redux';
+
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,10 +9,12 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import VpnKey from '@material-ui/icons/VpnKey';
+
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
-const styles = {
+const styles = theme => ({
     root: {
         flexGrow: 1,
     },
@@ -20,16 +25,14 @@ const styles = {
         marginLeft: -12,
         marginRight: 20,
     },
-};
+    loginButton: {
+        fill: theme.palette.primary.contrastText,
+    },
+});
 
 class Navbar extends React.Component {
     state = {
-        auth: true,
         anchorEl: null,
-    };
-
-    handleChange = event => {
-        this.setState({ auth: event.target.checked });
     };
 
     handleMenu = event => {
@@ -41,8 +44,8 @@ class Navbar extends React.Component {
     };
 
     render() {
-        const { classes } = this.props;
-        const { auth, anchorEl } = this.state;
+        const { classes, loggedIn } = this.props;
+        const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
 
         return (
@@ -52,9 +55,9 @@ class Navbar extends React.Component {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="title" color="inherit" className={classes.flex}>
-                        Photos
+                        Email Boilerplate App
                     </Typography>
-                    {auth && (
+                    {loggedIn ? (
                         <div>
                             <IconButton
                                 aria-owns={open ? 'menu-appbar' : null}
@@ -72,7 +75,7 @@ class Navbar extends React.Component {
                                     horizontal: 'right',
                                 }}
                                 transformOrigin={{
-                                    vertical: 'top',
+                                    vertical: 'bottom',
                                     horizontal: 'right',
                                 }}
                                 open={open}
@@ -80,8 +83,15 @@ class Navbar extends React.Component {
                             >
                                 <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                                 <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                                <MenuItem component="a" href="/api/logout">
+                                    Log Out
+                                </MenuItem>
                             </Menu>
                         </div>
+                    ) : (
+                        <IconButton component="a" href="/auth/google">
+                            <VpnKey className={classes.loginButton} />
+                        </IconButton>
                     )}
                 </Toolbar>
             </AppBar>
@@ -89,4 +99,8 @@ class Navbar extends React.Component {
     }
 }
 
-export default withStyles(styles)(Navbar);
+const mapStateToProps = state => ({
+    loggedIn: state.auth.loggedIn,
+});
+
+export default withStyles(styles)(connect(mapStateToProps)(Navbar));

@@ -11,5 +11,9 @@ module.exports = app => {
         })
     );
 
-    app.get('/auth/google/callback', passport.authenticate('google'));
+    app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
+        // success or fail?
+        // see docs
+        res.redirect('/');
+    });
 };
