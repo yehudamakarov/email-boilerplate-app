@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { connect } from 'react-redux';
 
@@ -38,7 +38,7 @@ const styles = theme => ({
     buttonText: {
         color: theme.palette.primary.contrastText,
     },
-    progress: {
+    spaceRight: {
         marginRight: theme.spacing.unit,
     },
 });
@@ -62,7 +62,7 @@ class Navbar extends React.Component {
     };
 
     render() {
-        const { classes, loggedIn, waitingForUser } = this.props;
+        const { classes, loggedIn, waitingForUser, user } = this.props;
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
 
@@ -75,16 +75,19 @@ class Navbar extends React.Component {
                     <Typography variant="title" color="inherit" className={classes.flex}>
                         Email Boilerplate App
                     </Typography>
-                    {waitingForUser && <CircularProgress className={classes.progress} size={30} color="secondary" />}
+                    {waitingForUser && <CircularProgress className={classes.spaceRight} size={30} color="secondary" />}
                     {loggedIn ? (
-                        <div>
-                            {/* Add loading spinner until form renders to dom. */}
-                            <PaymentsButton />
+                        <Fragment>
+                            <PaymentsButton className={classes.spaceRight} />
+                            <Typography className={classes.spaceRight} color="inherit" variant="button">
+                                Credits: {user.credits}
+                            </Typography>
                             <IconButton
                                 aria-owns={open ? 'menu-appbar' : null}
                                 aria-haspopup="true"
                                 onClick={this.handleMenu}
                                 color="inherit"
+                                className={classes.spaceRight}
                             >
                                 <AccountCircle />
                             </IconButton>
@@ -106,7 +109,7 @@ class Navbar extends React.Component {
                                     Log Out
                                 </MenuItem>
                             </Menu>
-                        </div>
+                        </Fragment>
                     ) : (
                         <Button
                             onClick={this.handleLoadingUser}
@@ -128,6 +131,7 @@ class Navbar extends React.Component {
 const mapStateToProps = state => ({
     loggedIn: Boolean(state.auth.user),
     waitingForUser: state.waitingForUser,
+    user: state.auth.user,
 });
 
 export default withStyles(styles)(

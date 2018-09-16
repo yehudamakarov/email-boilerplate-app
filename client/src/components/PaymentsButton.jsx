@@ -9,8 +9,6 @@ import { handleCharge } from '../store/actions';
 
 const styles = theme => ({
     button: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
         color: theme.palette.getContrastText(theme.palette.text.primary),
     },
 });

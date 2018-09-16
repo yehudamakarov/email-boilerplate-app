@@ -1,5 +1,6 @@
 const express = require('express');
 const cookieSession = require('cookie-session');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
 
@@ -9,6 +10,7 @@ const PORT = process.env.PORT || 5000;
 
 // Make passport serialize and deserialize to and from the session
 const app = express();
+app.use(bodyParser.json());
 app.use(
     cookieSession({
         maxAge: 6 * 60 * 60 * 1000,
@@ -32,5 +34,8 @@ require('./routes/authRoutes')(app);
 
 // Set up test routes
 require('./routes/testRoutes')(app);
+
+// Set up charge routes
+require('./routes/chargeRoutes')(app);
 
 app.listen(PORT);
