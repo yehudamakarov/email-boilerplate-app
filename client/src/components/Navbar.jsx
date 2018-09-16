@@ -11,10 +11,13 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import VpnKey from '@material-ui/icons/VpnKey';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import PaymentsButton from './PaymentsButton';
+
+import { loadingUser } from '../store/actions';
 
 const styles = theme => ({
     root: {
@@ -35,11 +38,19 @@ const styles = theme => ({
     buttonText: {
         color: theme.palette.primary.contrastText,
     },
+    progress: {
+        marginRight: theme.spacing.unit,
+    },
 });
 
 class Navbar extends React.Component {
     state = {
         anchorEl: null,
+    };
+
+    handleLoadingUser = () => {
+        const { loadingUser } = this.props;
+        loadingUser();
     };
 
     handleMenu = event => {
@@ -51,7 +62,7 @@ class Navbar extends React.Component {
     };
 
     render() {
-        const { classes, loggedIn } = this.props;
+        const { classes, loggedIn, waitingForUser } = this.props;
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
 
@@ -64,6 +75,7 @@ class Navbar extends React.Component {
                     <Typography variant="title" color="inherit" className={classes.flex}>
                         Email Boilerplate App
                     </Typography>
+                    {waitingForUser && <CircularProgress className={classes.progress} size={30} color="secondary" />}
                     {loggedIn ? (
                         <div>
                             {/* Add loading spinner until form renders to dom. */}
@@ -96,7 +108,13 @@ class Navbar extends React.Component {
                             </Menu>
                         </div>
                     ) : (
-                        <Button className={classes.buttonText} component="a" href="/auth/google">
+                        <Button
+                            onClick={this.handleLoadingUser}
+                            className={classes.buttonText}
+                            component="a"
+                            href="/auth/google"
+                            disabled={waitingForUser}
+                        >
                             Sign In with Google
                             <VpnKey className={classes.loginButton} />
                         </Button>
@@ -108,7 +126,13 @@ class Navbar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    loggedIn: state.auth.loggedIn,
+    loggedIn: Boolean(state.auth.user),
+    waitingForUser: state.waitingForUser,
 });
 
-export default withStyles(styles)(connect(mapStateToProps)(Navbar));
+export default withStyles(styles)(
+    connect(
+        mapStateToProps,
+        { loadingUser }
+    )(Navbar)
+);

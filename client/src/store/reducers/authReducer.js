@@ -1,15 +1,9 @@
-import { AUTH_SUCCEEDED, FAILED_AUTH } from '../actions/types';
+import { FETCH_USER } from '../actions/types';
 
-export default (state = { loggedIn: false, user: {} }, action) => {
+export default (state = { user: null }, action) => {
     switch (action.type) {
-        case AUTH_SUCCEEDED:
+        case FETCH_USER:
             return {
-                loggedIn: true,
-                user: action.payload,
-            };
-        case FAILED_AUTH:
-            return {
-                loggedIn: false,
                 user: action.payload,
             };
         default:
