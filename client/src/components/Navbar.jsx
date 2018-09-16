@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -17,7 +18,8 @@ import PaymentsButton from './PaymentsButton';
 
 const styles = theme => ({
     root: {
-        flexGrow: 1,
+        position: 'fixed',
+        bottom: 0,
     },
     flex: {
         flexGrow: 1,
@@ -28,6 +30,10 @@ const styles = theme => ({
     },
     loginButton: {
         fill: theme.palette.primary.contrastText,
+        marginLeft: theme.spacing.unit,
+    },
+    buttonText: {
+        color: theme.palette.primary.contrastText,
     },
 });
 
@@ -84,17 +90,16 @@ class Navbar extends React.Component {
                                 open={open}
                                 onClose={this.handleClose}
                             >
-                                <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                                <MenuItem onClick={this.handleClose}>My Account</MenuItem>
                                 <MenuItem onClick={this.handleClose} component="a" href="/api/logout">
                                     Log Out
                                 </MenuItem>
                             </Menu>
                         </div>
                     ) : (
-                        <IconButton component="a" href="/auth/google">
+                        <Button className={classes.buttonText} component="a" href="/auth/google">
+                            Sign In with Google
                             <VpnKey className={classes.loginButton} />
-                        </IconButton>
+                        </Button>
                     )}
                 </Toolbar>
             </AppBar>
