@@ -4,6 +4,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
+import blue from '@material-ui/core/colors/blue';
+import red from '@material-ui/core/colors/red';
+
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
@@ -15,6 +18,10 @@ const theme = createMuiTheme({
         fontWeightLight: 400,
         fontWeightRegular: 700,
         fontWeightMedium: 900,
+    },
+    palette: {
+        primary: blue,
+        secondary: red,
     },
 });
 

@@ -13,6 +13,7 @@ import VpnKey from '@material-ui/icons/VpnKey';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import PaymentsButton from './PaymentsButton';
 
 const styles = theme => ({
     root: {
@@ -23,7 +24,7 @@ const styles = theme => ({
     },
     menuButton: {
         marginLeft: -12,
-        marginRight: 20,
+        marginRight: theme.spacing.unit,
     },
     loginButton: {
         fill: theme.palette.primary.contrastText,
@@ -59,6 +60,8 @@ class Navbar extends React.Component {
                     </Typography>
                     {loggedIn ? (
                         <div>
+                            {/* Add loading spinner until form renders to dom. */}
+                            <PaymentsButton />
                             <IconButton
                                 aria-owns={open ? 'menu-appbar' : null}
                                 aria-haspopup="true"
@@ -82,8 +85,8 @@ class Navbar extends React.Component {
                                 onClose={this.handleClose}
                             >
                                 <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                                <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                                <MenuItem component="a" href="/api/logout">
+                                <MenuItem onClick={this.handleClose}>My Account</MenuItem>
+                                <MenuItem onClick={this.handleClose} component="a" href="/api/logout">
                                     Log Out
                                 </MenuItem>
                             </Menu>

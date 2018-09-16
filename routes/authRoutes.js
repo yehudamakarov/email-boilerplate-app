@@ -13,7 +13,7 @@ module.exports = app => {
 
     app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
         // success or fail?
-        // see docs
+        // see passport docs
         res.redirect('/');
     });
 };
