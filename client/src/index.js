@@ -14,10 +14,10 @@ import store from './store/createStore';
 
 const theme = createMuiTheme({
     typography: {
-        fontFamily: ['"Merriweather"', 'serif'].join(','),
-        fontWeightLight: 400,
-        fontWeightRegular: 700,
-        fontWeightMedium: 900,
+        // fontFamily: ['"Merriweather"', 'serif'].join(','),
+        // fontWeightLight: 400,
+        // fontWeightRegular: 700,
+        // fontWeightMedium: 900,
     },
     palette: {
         primary: blue,

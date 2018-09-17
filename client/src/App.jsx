@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { fetchUser } from './store/actions';
 import Navbar from './components/Navbar';
+import Dashboard from './components/Dashboard';
+import Landing from './components/Landing';
+import SurveyNew from './components/SurveyNew';
 
 class App extends Component {
     componentDidMount() {
@@ -15,10 +18,12 @@ class App extends Component {
         return (
             <Fragment>
                 <CssBaseline />
-                <Navbar />
                 <Router>
                     <Fragment>
-                        <Route />
+                        <Navbar />
+                        <Route exact path="/" component={Landing} />
+                        <Route exact path="/surveys" component={Dashboard} />
+                        <Route path="/surveys/new" component={SurveyNew} />
                     </Fragment>
                 </Router>
             </Fragment>
