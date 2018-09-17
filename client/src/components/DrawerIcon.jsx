@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
-import HomeIcon from '@material-ui/icons/Home';
+import HomeIcon from '@material-ui/icons/HomeRounded';
 
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, withStyles } from '@material-ui/core';
 
