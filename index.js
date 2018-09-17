@@ -33,7 +33,7 @@ require('./services/passport');
 require('./routes/authRoutes')(app);
 
 // Set up test routes
-require('./routes/testRoutes')(app);
+require('./routes/apiRoutes')(app);
 
 // Set up charge routes
 require('./routes/chargeRoutes')(app);
