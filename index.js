@@ -38,4 +38,19 @@ require('./routes/apiRoutes')(app);
 // Set up charge routes
 require('./routes/chargeRoutes')(app);
 
+
+if (process.env.NODE_ENV === 'production') {
+    // if the index.html file requests, static/main.js etc. - automatically
+    // prepend client/build. Any get requests not recognized will go through
+    // this.
+    app.use(express.static('client/build'));
+    // If there were no matches, the client must have been needing to run the
+    // URL through React Router or something. send the index file from the build
+    // folder
+    const path = require('path');
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    })
+}
+
 app.listen(PORT);
