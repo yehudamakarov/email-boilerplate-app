@@ -8,7 +8,6 @@ import blue from '@material-ui/core/colors/blue';
 import red from '@material-ui/core/colors/red';
 
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
 
 import store from './store/createStore';
 
@@ -33,4 +32,3 @@ ReactDOM.render(
     </MuiThemeProvider>,
     document.getElementById('root') // eslint-disable-line
 );
-registerServiceWorker();

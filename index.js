@@ -49,7 +49,6 @@ if (process.env.NODE_ENV === 'production') {
     // folder
     const path = require('path');
     app.get('*', (req, res) => {
-        console.log('* is firing')
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     })
 }
