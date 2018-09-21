@@ -1,20 +1,27 @@
 import React, { Fragment } from 'react';
-
 import { connect } from 'react-redux';
-
+import { Link } from 'react-router-dom';
+import {
+    Drawer,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    AppBar,
+    Toolbar,
+    Typography,
+    Button,
+    IconButton,
+    CircularProgress,
+    MenuItem,
+    Menu,
+} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import VpnKey from '@material-ui/icons/VpnKey';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import MenuIcon from '@material-ui/icons/Menu';
+import HomeIcon from '@material-ui/icons/HomeRounded';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import DrawerIcon from './DrawerIcon';
 import PaymentsButton from './PaymentsButton';
 
 import { loadingUser } from '../store/actions';
@@ -24,8 +31,9 @@ const styles = theme => ({
         position: 'fixed',
         bottom: 0,
     },
-    flex: {
+    title: {
         flexGrow: 1,
+        textDecoration: 'none',
     },
     menuButton: {
         marginLeft: -12,
@@ -41,11 +49,22 @@ const styles = theme => ({
     spaceRight: {
         marginRight: theme.spacing.unit,
     },
+    list: {
+        width: 250,
+    },
 });
 
 class Navbar extends React.Component {
     state = {
         anchorEl: null,
+        drawerOpen: false,
+    };
+
+    toggleDrawer = drawerOpen => event => {
+        event.stopPropagation();
+        this.setState({
+            drawerOpen,
+        });
     };
 
     handleLoadingUser = () => {
@@ -63,16 +82,42 @@ class Navbar extends React.Component {
 
     render() {
         const { classes, loggedIn, waitingForUser, user } = this.props;
-        const { anchorEl } = this.state;
-        const open = Boolean(anchorEl);
+        const { anchorEl, drawerOpen } = this.state;
+        const menuOpen = Boolean(anchorEl);
 
         return (
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-                        <DrawerIcon />
+                    <IconButton
+                        onClick={this.toggleDrawer(true)}
+                        className={classes.menuButton}
+                        color="inherit"
+                        aria-label="Menu"
+                    >
+                        <div>
+                            <MenuIcon />
+                            <Drawer open={drawerOpen} onClose={this.toggleDrawer(false)}>
+                                <div
+                                    tabIndex={0}
+                                    role="button"
+                                    onClick={this.toggleDrawer(false)}
+                                    onKeyDown={this.toggleDrawer(false)}
+                                >
+                                    <div className={classes.list}>
+                                        <List>
+                                            <ListItem button component={Link} to="/surveys">
+                                                <ListItemIcon>
+                                                    <HomeIcon />
+                                                </ListItemIcon>
+                                                <ListItemText primary="Dashboard" />
+                                            </ListItem>
+                                        </List>
+                                    </div>
+                                </div>
+                            </Drawer>
+                        </div>
                     </IconButton>
-                    <Typography variant="title" color="inherit" className={classes.flex}>
+                    <Typography component={Link} to="/" variant="title" color="inherit" className={classes.title}>
                         Email Boilerplate App
                     </Typography>
                     {waitingForUser && <CircularProgress className={classes.spaceRight} size={30} color="secondary" />}
@@ -83,7 +128,7 @@ class Navbar extends React.Component {
                                 Credits: {user.credits}
                             </Typography>
                             <IconButton
-                                aria-owns={open ? 'menu-appbar' : null}
+                                aria-owns={menuOpen ? 'menu-appbar' : null}
                                 aria-haspopup="true"
                                 onClick={this.handleMenu}
                                 color="inherit"
@@ -102,7 +147,7 @@ class Navbar extends React.Component {
                                     vertical: 'bottom',
                                     horizontal: 'right',
                                 }}
-                                open={open}
+                                open={menuOpen}
                                 onClose={this.handleClose}
                             >
                                 <MenuItem onClick={this.handleClose} component="a" href="/api/logout">
