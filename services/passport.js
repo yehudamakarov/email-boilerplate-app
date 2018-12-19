@@ -25,9 +25,7 @@ passport.use(
         },
         async (accessToken, refreshToken, profile, done) => {
             const googleDisplayName = profile.displayName;
-            const googleAccountEmailAddress = profile.emails.find(
-                emailObject => emailObject.type === 'account'
-            ).value;
+            const googleAccountEmailAddress = profile.emails.find(emailObject => emailObject.type === 'account').value;
             const googleProfileId = profile.id;
 
             const existingUser = await User.findOne({ googleProfileId });
